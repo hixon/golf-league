@@ -9,7 +9,6 @@
         public decimal? CurrIndex { get; set; }
         public PlayerType PlayerType { get; set; }
         public bool Active { get; set; }
-        public Guid LeagueId { get; set; }
         public DateTime CreateDt { get; set; }
         public DateTime? LastUpdateDt { get; set; }
     }
