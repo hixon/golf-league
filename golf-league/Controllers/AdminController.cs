@@ -2,6 +2,7 @@
 using golf_league.Models;
 using golf_league.Infrastructure;
 using AutoMapper;
+using golf_league.ViewModels;
 
 namespace golf_league.Controllers
 {
@@ -28,6 +29,14 @@ namespace golf_league.Controllers
             var courses = repo.GetCourses();
 
             return View(courses);
+        }
+
+        [HttpPost]
+        public IActionResult SaveCourse(CourseAdminViewModel vm)
+        {
+            repo.SaveCourse(vm.Details);
+
+            return Redirect("Course");
         }
     }
 }
