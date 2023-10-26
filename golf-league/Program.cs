@@ -1,7 +1,18 @@
+using golf_league.Models;
+using golf_league.Profiles;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ApplicationContext"),
+        providerOptions => providerOptions.EnableRetryOnFailure()
+     ));
 
 var app = builder.Build();
 
