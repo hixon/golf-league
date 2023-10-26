@@ -7,10 +7,8 @@
 @*Page to add/view/modify details to courses that are in the database*@
 @model golf_league.ViewModels.CourseAdminViewModel
 
-@foreach(var item in Model.Courses)
-{
-    
-}
+<label>Course List</label>
+@Html.DropDownListFor(c => c.Courses, new SelectList(Model.Courses, "Id", "Name"))
 
 <div id="courseDetails">
     <form asp-action="SaveCourse" asp-controller="Admin" method="post">

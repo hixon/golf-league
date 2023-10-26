@@ -18,9 +18,14 @@ namespace golf_league.Infrastructure
         }
         public CourseAdminViewModel GetCourses()
         {
+            var allCourses = _context.Course
+                .Where(c => c.Active == true)
+                .OrderBy(c => c.Name)
+                .ToList();
+
             return new CourseAdminViewModel()
             {
-                Courses = new List<Course>(),
+                Courses = allCourses,
             };
         }
 
