@@ -28,5 +28,10 @@ namespace golf_league.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult ScoreCard()
+        {
+            return View();
+        }
     }
 }
