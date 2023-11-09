@@ -10,6 +10,7 @@ namespace golf_league.ViewModels
         public decimal? StartIndex { get; set; }
         public decimal? CurrIndex { get; set; }
         public PlayerType PlayerType { get; set; }
+        public int PlayerTypeId { get; set; }
         public bool Active { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 @model golf_league.ViewModels.PlayerAdminViewModel
 
 <label>Player List</label>
-@Html.DropDownListFor(c => c.Players, new SelectList(Model.Players, "Id", "Name"))
+@Html.DropDownListFor(c => c.Players, new SelectList(Model.Players, "Id", "LastName"))
 
 <div id="playerDetails">
     <form asp-action="SavePlayer" asp-controller="Admin" method="post">
@@ -39,9 +39,9 @@
                         </div>
                     </div>
                     <div class="sm:col-span-3">
-                        <label asp-for="Details.PlayerType" class="block text-sm font-medium leading-6 text-gray-900">Player Type</label>
+                        <label asp-for="Details.PlayerTypeId" class="block text-sm font-medium leading-6 text-gray-900">Player Type</label>
                         <div class="mt-2">
-                            <input type="number" max="199" min="100" step="1" asp-for="Details.PlayerType" placeholder="99" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" sm:leading-6 />
+                            @Html.DropDownListFor(c => c.Details.PlayerTypeId, new SelectList(Model.PlayerTypes, "Id", "Name"))
                         </div>
                     </div>
                 </div>
