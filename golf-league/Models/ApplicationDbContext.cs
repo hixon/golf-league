@@ -7,6 +7,7 @@ namespace golf_league.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Course> Course { get; set; }
+        public DbSet<Player> Player { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
     }
 

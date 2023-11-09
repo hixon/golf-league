@@ -38,5 +38,20 @@ namespace golf_league.Controllers
 
             return Redirect("Course");
         }
+
+        public IActionResult Player()
+        {
+            var players = repo.GetPlayers();
+
+            return View(players);
+        }
+
+        [HttpPost]
+        public IActionResult SavePlayer(PlayerAdminViewModel vm)
+        {
+            repo.SavePlayer(vm.Details);
+
+            return Redirect("Player");
+        }
     }
 }

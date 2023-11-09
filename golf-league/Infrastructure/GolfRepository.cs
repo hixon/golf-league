@@ -29,6 +29,17 @@ namespace golf_league.Infrastructure
             };
         }
 
+        public PlayerAdminViewModel GetPlayers()
+        {
+            var allPlayers = _context.Player
+                .ToList();
+
+            return new PlayerAdminViewModel()
+            {
+                Players = allPlayers,
+            };
+        }
+
         public void SaveCourse(CourseDetailsViewModel info)
         {
             //check to see if the course exists and add it if so
@@ -62,6 +73,38 @@ namespace golf_league.Infrastructure
             }
         }
 
+        public void SavePlayer(PlayerDetailsViewModel info)
+        {
+            if (info.Id == Guid.Empty)
+            {
+                //Save new Course
+                SaveNewPlayer(info);
+            }
+            else
+            {
+                //get course and save any changes
+                Player playerToUpdate = _context.Player.Where(c => c.Id == info.Id).FirstOrDefault();
+
+                if (playerToUpdate is null)
+                {
+                    SaveNewPlayer(info);
+                }
+                else
+                {
+                    //replace w/ automapper call
+                    playerToUpdate.FirstName = info.FirstName;
+                    playerToUpdate.LastName = info.LastName;
+                    playerToUpdate.StartIndex = info.StartIndex;
+                    playerToUpdate.CurrIndex = info.CurrIndex;
+                    playerToUpdate.PlayerType = info.PlayerType;
+                    playerToUpdate.Active = info.Active;
+                    playerToUpdate.LastUpdateDt = DateTime.Now;
+
+                    _context.SaveChanges();
+                }
+            }
+        }
+
         /*  PRIVATE METHODS */
         private void SaveNewCourse(CourseDetailsViewModel info)
         {
@@ -77,6 +120,24 @@ namespace golf_league.Infrastructure
             };
 
             _context.Course.Add(track);
+            _context.SaveChanges();
+        }
+
+        private void SaveNewPlayer(PlayerDetailsViewModel info)
+        {
+            Player person = new Player()
+            {
+                FirstName = info.FirstName,
+                LastName = info.LastName,
+                StartIndex = info.StartIndex,
+                CurrIndex = info.CurrIndex,
+                PlayerType = info.PlayerType,
+                Active = true,
+                CreateDt = DateTime.Now,
+                LastUpdateDt = DateTime.Now
+            };
+
+            _context.Player.Add(person);
             _context.SaveChanges();
         }
     }
