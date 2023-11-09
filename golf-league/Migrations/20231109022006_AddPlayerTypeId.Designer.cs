@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using golf_league.Models;
 
@@ -11,9 +12,11 @@ using golf_league.Models;
 namespace golf_league.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231109022006_AddPlayerTypeId")]
+    partial class AddPlayerTypeId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +85,10 @@ namespace golf_league.Migrations
                     b.Property<DateTime?>("LastUpdateDt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("PlayerTypeId")
+                    b.Property<int>("PlayerTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("PlayerTypeId1")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("StartIndex")
@@ -90,7 +96,7 @@ namespace golf_league.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerTypeId");
+                    b.HasIndex("PlayerTypeId1");
 
                     b.ToTable("Player");
                 });
@@ -125,7 +131,7 @@ namespace golf_league.Migrations
                 {
                     b.HasOne("golf_league.Models.PlayerType", "PlayerType")
                         .WithMany()
-                        .HasForeignKey("PlayerTypeId")
+                        .HasForeignKey("PlayerTypeId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

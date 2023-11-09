@@ -8,6 +8,7 @@ namespace golf_league.Models
 
         public DbSet<Course> Course { get; set; }
         public DbSet<Player> Player { get; set; }
+        public DbSet<PlayerType> PlayerType { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder) { }
     }
 

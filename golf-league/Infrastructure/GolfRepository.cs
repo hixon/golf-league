@@ -34,10 +34,18 @@ namespace golf_league.Infrastructure
             var allPlayers = _context.Player
                 .ToList();
 
+            var allTypes = GetPlayerTypes();
+
             return new PlayerAdminViewModel()
             {
                 Players = allPlayers,
+                PlayerTypes = allTypes
             };
+        }
+
+        public IEnumerable<PlayerType> GetPlayerTypes()
+        {
+            return _context.PlayerType.Where(p => p.Active == true).ToList();
         }
 
         public void SaveCourse(CourseDetailsViewModel info)
@@ -96,7 +104,7 @@ namespace golf_league.Infrastructure
                     playerToUpdate.LastName = info.LastName;
                     playerToUpdate.StartIndex = info.StartIndex;
                     playerToUpdate.CurrIndex = info.CurrIndex;
-                    playerToUpdate.PlayerType = info.PlayerType;
+                    playerToUpdate.PlayerTypeId = info.PlayerTypeId;
                     playerToUpdate.Active = info.Active;
                     playerToUpdate.LastUpdateDt = DateTime.Now;
 
@@ -131,7 +139,7 @@ namespace golf_league.Infrastructure
                 LastName = info.LastName,
                 StartIndex = info.StartIndex,
                 CurrIndex = info.CurrIndex,
-                PlayerType = info.PlayerType,
+                PlayerTypeId = info.PlayerTypeId,
                 Active = true,
                 CreateDt = DateTime.Now,
                 LastUpdateDt = DateTime.Now
