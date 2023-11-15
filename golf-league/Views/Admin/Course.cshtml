@@ -7,8 +7,10 @@
 @*Page to add/view/modify details to courses that are in the database*@
 @model golf_league.ViewModels.CourseAdminViewModel
 
+@Html.HiddenFor(m => m.Tees)
+
 <label>Course List</label>
-@Html.DropDownListFor(c => c.Courses, new SelectList(Model.Courses, "Id", "Name"))
+@Html.DropDownListFor(c => c.Courses, new SelectList(Model.Courses, "Id", "Name"), "(Choose One)")
 
 <div id="courseDetails">
     <form asp-action="SaveCourse" asp-controller="Admin" method="post">
@@ -23,31 +25,49 @@
                             <input type="text" asp-for="Details.Name" placeholder="Course Name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" sm:leading-6 />
                         </div>
                     </div>
-                    <div class="sm:col-span-3">
-                        <label asp-for="Details.Tee" class="block text-sm font-medium leading-6 text-gray-900">Tees</label>
-                        <div class="mt-2">
-                            <input type="text" asp-for="Details.Tee" placeholder="Tee Marker Color" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" sm:leading-6 />
-                        </div>
-                    </div>
                 </div>
-
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-3">
-                        <label asp-for="Details.Rating" class="block text-sm font-medium leading-6 text-gray-900">Course Rating</label>
-                        <div class="mt-2">
-                            <input type="number" max="99.9" min="0.1" step="0.1" asp-for="Details.Rating" placeholder="0.0" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" sm:leading-6 />
-                        </div>
-                    </div>
-                    <div class="sm:col-span-3">
-                        <label asp-for="Details.Slope" class="block text-sm font-medium leading-6 text-gray-900">Course Slope</label>
-                        <div class="mt-2">
-                            <input type="number" max="199" min="100" step="1" asp-for="Details.Slope" placeholder="99" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" sm:leading-6 />
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="bg-sky-500 rounded-full text-white font-medium px-4">Save Changes</button>
             </div>
         </div>
+        <div id="Tees">
+            <button type="button" class="bg-sky-500 rounded-full text-white font-medium px-4" onclick="AddTeeBox()">Add Tee Box</button>
+            <table id="tees-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Par</th>
+                        <th>Rating</th>
+                        <th>Slope</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <button type="submit" class="bg-sky-500 rounded-full text-white font-medium px-4" onclick="SetupSaveDetails()">Save Changes</button>
     </form>
 </div>
+
+@section scripts{
+    <script>
+        let count = 1;
+        function AddTeeBox(){
+            var table = document.querySelector("#tees-table");
+            var row = table.insertRow(1);
+            var name = row.insertCell(0);
+            var par = row.insertCell(1);
+            var rate = row.insertCell(2);
+            var slope = row.insertCell(3);
+           
+            row.id = "tee-" + count;
+            name.innerHTML = "<input type='text' class='text-center' placeholder='Tee Box' />";
+            par.innerHTML = "<input type='number' max='80' min='20' step='1' class='text-center' placeholder='99' />";
+            rate.innerHTML = "<input type='number' max='999.9' min='0.0' step='0.1' class='text-center' placeholder='99.9' />";
+            slope.innerHTML = "<input type='number' max='999' min='99' step='1' class='text-center' placeholder='99' />";
+
+            count++;
+        }
+
+        function SetupSaveDetails() {
+            alert("Set JSON");
+            document.querySelector("#Tees") = JSON.stringify();
+        }
+    </script>
+}

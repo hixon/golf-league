@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using golf_league.Models;
 using golf_league.ViewModels;
+using System.Text.Json;
 
 namespace golf_league.Infrastructure
 {
@@ -18,14 +19,10 @@ namespace golf_league.Infrastructure
         }
         public CourseAdminViewModel GetCourses()
         {
-            var allCourses = _context.Course
-                .Where(c => c.Active == true)
-                .OrderBy(c => c.Name)
-                .ToList();
-
             return new CourseAdminViewModel()
             {
-                Courses = allCourses,
+                Courses = GetAllCourses(),
+                Tees = JsonSerializer.Serialize(GetAllTees()),
             };
         }
 
@@ -70,9 +67,9 @@ namespace golf_league.Infrastructure
                 {
                     //replace w/ automapper call
                     courseToUpdate.Name = info.Name;
-                    courseToUpdate.Tee = info.Tee;
-                    courseToUpdate.Rating = info.Rating;
-                    courseToUpdate.Slope = info.Slope;
+                    //courseToUpdate.Tee = info.Tee;
+                    //courseToUpdate.Rating = info.Rating;
+                    //courseToUpdate.Slope = info.Slope;
                     courseToUpdate.Active = info.Active;
                     courseToUpdate.LastUpdateDt = DateTime.Now;
 
@@ -114,14 +111,27 @@ namespace golf_league.Infrastructure
         }
 
         /*  PRIVATE METHODS */
+        private IEnumerable<Course> GetAllCourses()
+        {
+            return _context.Course
+                .Where(c => c.Active == true)
+                .OrderBy(c => c.Name)
+                .ToList();
+        }
+
+        private IEnumerable<Tee> GetAllTees()
+        {
+            return _context.Tee.Where(t => t.Active == true).ToList();
+        }
+
         private void SaveNewCourse(CourseDetailsViewModel info)
         {
             Course track = new Course()
             {
                 Name = info.Name,
-                Tee = info.Tee,
-                Rating = info.Rating,
-                Slope = info.Slope,
+                //Tee = info.Tee,
+                //Rating = info.Rating,
+                //Slope = info.Slope,
                 Active = true,
                 CreateDt = DateTime.Now,
                 LastUpdateDt = DateTime.Now
