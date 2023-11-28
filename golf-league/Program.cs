@@ -35,4 +35,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=ScoreCard}/{id?}");
 
+SeedData.EnsurePopulated(app);
+
 app.Run();

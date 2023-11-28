@@ -29,6 +29,30 @@ namespace golf_league.Infrastructure
             };
         }
 
+        public Course GetCourseById(Guid courseId)
+        {
+            return _context.Course.Where(c => c.Id == courseId).First();
+        }
+
+        public IEnumerable<Tee> GetTeesByCourseId(Guid courseId)
+        {
+            return _context.Tee.Where(t => t.CourseId == courseId).ToList();
+        }
+
+        public IEnumerable<HoleInfo> GetHoleInfoByCourseId(Guid courseId)
+        {
+            List<HoleInfo> allHoles = new List<HoleInfo>();
+
+            IEnumerable<Tee> Tees = GetTeesByCourseId(courseId);
+
+            foreach(var tee in Tees)
+            {
+                allHoles.AddRange(GetAllHolesByTeeId(tee.Id));
+            }
+
+            return allHoles;
+        }
+
         public PlayerAdminViewModel GetPlayers()
         {
             var allPlayers = _context.Player
@@ -40,6 +64,22 @@ namespace golf_league.Infrastructure
             {
                 Players = allPlayers,
                 PlayerTypes = allTypes
+            };
+        }
+
+        public IEnumerable<Player> GetAllPlayers()
+        {
+            return _context.Player.ToList();
+        }
+
+        public ScoreCardViewModel GetScoreCardDetails(Guid courseId) //pick westy since we always play there
+        {
+            return new ScoreCardViewModel()
+            {
+                Course = GetCourseById(courseId),
+                Tees = GetTeesByCourseId(courseId),
+                Holes = GetHoleInfoByCourseId(courseId),
+                Players = GetAllPlayers()
             };
         }
 
@@ -113,8 +153,7 @@ namespace golf_league.Infrastructure
             }
         }
 
-        /*  PRIVATE METHODS */
-        private IEnumerable<Course> GetAllCourses()
+        public IEnumerable<Course> GetAllCourses()
         {
             return _context.Course
                 .Where(c => c.Active == true)
@@ -127,6 +166,11 @@ namespace golf_league.Infrastructure
             return _context.Tee.Where(t => t.Active == true).ToList();
         }
 
+        /*  PRIVATE METHODS */
+        private IEnumerable<HoleInfo> GetAllHolesByTeeId(Guid teeId)
+        {
+            return _context.HoleInfo.Where(h => h.TeeId == teeId).OrderBy(t => t.Number).ToList(); 
+        }
         private void SaveNewCourse(CourseDetailsViewModel info)
         {
             Course track = new Course()
