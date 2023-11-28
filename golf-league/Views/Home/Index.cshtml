@@ -7,3 +7,289 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<label class="switch">
+    <input type="checkbox">
+    <span class="slider"></span>
+</label>
+
+<label class="switch">
+    <input type="checkbox" checked>
+    <span class="slider"></span>
+</label>
+<br>
+<br>
+
+<label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+</label>
+
+<label class="switch">
+    <input type="checkbox" checked>
+    <span class="slider round"></span>
+</label>
+
+<div class="test-fourball">
+    <table class="table-auto border-separate drop-shadow-2xl border-2 border-slate-900">
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Team</th>
+                <th>Total to Par Net</th>
+                <th>Total Net</th>
+                <th>Total to Par Gross</th>
+                <th>Total Gross</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr onclick="showscore('#score1')">
+                <td>1</td>
+                <td>Ryan Hixon + Sal Gori</td>
+                <td>+11</td>
+                <td>82</td>
+                <td>+15</td>
+                <td>86</td>
+            </tr>
+            <tr id="score1">
+                <td colspan="7">
+                    <table class="table-auto border-separate drop-shadow-2xl border-2 border-slate-900" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="border border-slate-500">1</th>
+                                <th class="border border-slate-500">2</th>
+                                <th class="border border-slate-500">3</th>
+                                <th class="border border-slate-500">4</th>
+                                <th class="border border-slate-500">5</th>
+                                <th class="border border-slate-500">6</th>
+                                <th class="border border-slate-500">7</th>
+                                <th class="border border-slate-500">8</th>
+                                <th class="border border-slate-500">9</th>
+                                <th class="border border-slate-500">Out</th>
+                                <th class="border border-slate-500">10</th>
+                                <th class="border border-slate-500">11</th>
+                                <th class="border border-slate-500">12</th>
+                                <th class="border border-slate-500">13</th>
+                                <th class="border border-slate-500">14</th>
+                                <th class="border border-slate-500">15</th>
+                                <th class="border border-slate-500">16</th>
+                                <th class="border border-slate-500">17</th>
+                                <th class="border border-slate-500">18</th>
+                                <th class="border border-slate-500">In</th>
+                                <th class="border border-slate-500">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class=" text-center border border-slate-200">Ryan Hixon</td>
+                                <td class=" text-center border border-slate-200 bg-orange-200">5</td>
+                                <td class=" text-center border border-slate-200 ">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">90</td>
+                            </tr>
+                            <tr>
+                                <td class=" text-center border border-slate-200">Sal Gori</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">90</td>
+                            </tr>
+                            <tr>
+                                <td class=" text-center border border-slate-200">To Par (Net)</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">6</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">11</td>
+                                <td class=" text-center border border-slate-200">17</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr onclick="showscore('#score2')">
+                <td>2</td>
+                <td>Karl Hils Jr + Dave Asmonga</td>
+                <td>+12</td>
+                <td>83</td>
+                <td>+18</td>
+                <td>89</td>
+            </tr>
+            <tr id="score2">
+                <td colspan="6">
+                    <table class="table-auto border-separate drop-shadow-2xl border-2 border-slate-900" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="border border-slate-500">1</th>
+                                <th class="border border-slate-500">2</th>
+                                <th class="border border-slate-500">3</th>
+                                <th class="border border-slate-500">4</th>
+                                <th class="border border-slate-500">5</th>
+                                <th class="border border-slate-500">6</th>
+                                <th class="border border-slate-500">7</th>
+                                <th class="border border-slate-500">8</th>
+                                <th class="border border-slate-500">9</th>
+                                <th class="border border-slate-500">Out</th>
+                                <th class="border border-slate-500">10</th>
+                                <th class="border border-slate-500">11</th>
+                                <th class="border border-slate-500">12</th>
+                                <th class="border border-slate-500">13</th>
+                                <th class="border border-slate-500">14</th>
+                                <th class="border border-slate-500">15</th>
+                                <th class="border border-slate-500">16</th>
+                                <th class="border border-slate-500">17</th>
+                                <th class="border border-slate-500">18</th>
+                                <th class="border border-slate-500">In</th>
+                                <th class="border border-slate-500">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class=" text-center border border-slate-200">Karl Hils Jr</td>
+                                <td class=" text-center border border-slate-200 bg-orange-200">5</td>
+                                <td class=" text-center border border-slate-200 ">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200 bg-red-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">90</td>
+                            </tr>
+                            <tr>
+                                <td class=" text-center border border-slate-200">Dave Asmonga</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">5</td>
+                                <td class=" text-center border border-slate-200">45</td>
+                                <td class=" text-center border border-slate-200">90</td>
+                            </tr>
+                            <tr>
+                                <td class=" text-center border border-slate-200">To Par (Net)</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">6</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">2</td>
+                                <td class=" text-center border border-slate-200">0</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">1</td>
+                                <td class=" text-center border border-slate-200">11</td>
+                                <td class=" text-center border border-slate-200">17</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script>
+
+    document.querySelector("#score1").hidden = "hidden";
+    document.querySelector("#score2").hidden = "hidden";
+
+    function showscore(id) {
+        if (document.querySelector(id).hidden == true) {
+                document.querySelector(id).hidden = "";
+        }
+        else {
+                document.querySelector(id).hidden = "hidden";
+        }
+        
+    }
+
+    </script>
+}
