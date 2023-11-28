@@ -19,9 +19,12 @@ namespace golf_league.Infrastructure
         }
         public CourseAdminViewModel GetCourses()
         {
+            var allcourses = GetAllCourses();
+
             return new CourseAdminViewModel()
             {
-                Courses = GetAllCourses(),
+                Courses = allcourses,
+                AllCourses = JsonSerializer.Serialize(allcourses),
                 Tees = JsonSerializer.Serialize(GetAllTees()),
             };
         }
