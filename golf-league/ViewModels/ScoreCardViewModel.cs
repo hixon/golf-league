@@ -12,5 +12,14 @@ namespace golf_league.ViewModels
         public IEnumerable<Tee> Tees { get; set; }
         public IEnumerable<HoleInfo> Holes { get; set; }
         public IEnumerable<Player> Players { get; set; }
+        //public IEnumerable<Games> Games { get; set; }
+        public string TeesJson { get; set; }
+        public string HolesJson { get; set; }
+        public string PlayersJson { get; set; }
+
+        public string GetsPop(Guid hole, Guid player)
+        {
+            return "*";
+        }
     }
 }

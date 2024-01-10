@@ -6,6 +6,9 @@
 
 @model golf_league.ViewModels.ScoreCardViewModel
 
+@Html.HiddenFor(s => s.TeesJson)
+@Html.HiddenFor(s => s.HolesJson)
+
 <div id="score-card">
     <table class="table-auto border-separate drop-shadow-2xl border-2 border-slate-900">
         <thead>
@@ -94,113 +97,122 @@
         <tbody>
             @foreach(var golfer in Model.Players)
             {
-                <tr>
-                    <td class="">@golfer.FirstName</td>
-                    <td class="">@golfer.CurrIndex</td>
-                    <td class="">White</td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border border-slate-200">4</td>
-                    <td class=" text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
+                <tr id="@golfer.Id" class="golferinfo">
+                    <td class="name">@golfer.FirstName</td>
+                    <td class="handicap" data-index="@golfer.CurrIndex">@golfer.CurrIndex</td>
+                    <td class="tee">@Html.DropDownListFor(c => c.Tees, new SelectList(Model.Tees, "Id", "Name"), "(Choose One)", new {onchange = "UpdateCourseTees(this)"})</td>
                     
-                    <td class=" text-center border border-slate-200">4</td>
-                    <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">5</td>
+                    @* @foreach(var hole in Model.Holes.Where(h => h.TeeId == new Guid()))
+                    {
+                        <td class="@hole.Id text-center border border-slate-200"><sup>@Model.GetsPop(hole.Id, golfer.Id)</sup></td>
+                    } *@
 
-                    <td class=" text-center border border-slate-200">42<sub>36</sub></td>
-                    <td class=" text-center border border-slate-200">42<sub>37</sub></td>
-                    <td class=" text-center border border-slate-200">84<sub>73</sub></td>
+                    <td class="h1 w-1/30 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
+                    <td class="h2 text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
+                    <td class="h3 text-center border-solid border-2 border-blue-500 rounded-full">3</td>
+                    <td class="h4 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
+                    <td class="h5 text-center border-double border-4 border-red-500">5</td>
+                    <td class="h6 text-center border border-slate-200">4</td>
+                    <td class="h7 text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
+                    <td class="h8 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
+                    <td class="h9 text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
+                    
+                    <td class="h10 text-center border border-slate-200">4</td>
+                    <td class="h11 text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
+                    <td class="h12 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
+                    <td class="h13 text-center border-double border-4 border-red-500">5</td>
+                    <td class="h14 text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
+                    <td class="h15 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
+                    <td class="h16 text-center border-double border-4 border-red-500">5</td>
+                    <td class="h17 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
+                    <td class="h18 text-center border-solid border-2 border-red-500">5</td>
+
+                    <td class="out text-center border border-slate-200">42<sub>36</sub></td>
+                    <td class="in text-center border border-slate-200">42<sub>37</sub></td>
+                    <td class="total text-center border border-slate-200">84<sub>73</sub></td>
+                   @*  <td><input type="text" style="width:25px"/><sup>*</sup><sub>4</sub></td> *@
                 </tr>
             }
-            @* <tr>
-                <td class="">Ryan</td>
-                <td class="">11.2</td>
-                <td class="">White</td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">42<sub>36</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">42<sub>37</sub></td>
-                <td class=" text-center border border-slate-200">84<sub>73</sub></td>
-            </tr>
-            <tr>
-                <td class="">Sal</td>
-                <td class="">5.5</td>
-                <td class="">White</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">3</td>
-                <td class=" text-center border-double border-4 border-blue-500">3</td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">34<sub>31</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-solid border-2 border-red-500">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">3</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">35<sub>33</sub></td>
-                <td class=" text-center border border-slate-200">69<sub>64</sub></td>
-            </tr>
-            <tr>
-                <td class="">Karl Sr.</td>
-                <td class="">32.1</td>
-                <td class="">Gold</td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">53<sub>37</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-single border-2 border-red-500">4<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">9<sup>**</sup><sub>7</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-single border-2 border-red-500">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">9<sup>**</sup><sub>7</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">59<sub>43</sub></td>
-                <td class=" text-center border border-slate-200">112<sub>80</sub></td>
-            </tr> *@
         </tbody>
     </table>
+
+    <button type="submit" onclick="PrepareData()">Save</button>
 </div>
+
+@section scripts{
+    <script>
+        function UpdateCourseTees(details) {
+            const teedetails = JSON.parse(document.querySelector("#TeesJson").value);
+
+            const rating = teedetails.filter(item => item.Id == details.value)[0].Rating;
+            const slope = teedetails.filter(item => item.Id == details.value)[0].Slope;
+            const par = teedetails.filter(item => item.Id == details.value)[0].Par;
+
+            //calculate side handicap
+            let index = details.parentElement.parentElement.querySelector(".handicap").getAttribute("data-index");
+
+            const courseIndex = Math.round(index * (slope / 113) + (rating - par));
+
+            details.parentElement.parentElement.querySelector(".handicap").textContent = courseIndex;
+
+            SetHoleDetails(courseIndex, details.value, details.parentElement.parentElement);
+        }
+
+        function SetHoleDetails(courseHcp, teeId, playerId) {
+            //need to loop through the holes and only show the ones we care about
+            //also need to figure out if we should get a pop on the hole
+            //need to clear tees or update them if they're available
+
+            const holes = JSON.parse(document.querySelector("#HolesJson").value).filter(item => item.TeeId == teeId);
+            let ExtraPops = Math.floor(courseHcp/18); //this will be 0 if a player is < 18
+            let WeightedHcp = courseHcp % 18;
+
+            holes.forEach(function(item) {
+                let hole = document.createElement("td");
+                hole.classList.add("text-center"); 
+                hole.classList.add("border");
+                hole.classList.add("border-slate-200"); 
+                hole.classList.add("w-1/20"); 
+                hole.setAttribute("data-hole", item.Id);
+
+                let holeDetails = document.createElement("input");
+                holeDetails.type = "text";
+                holeDetails.classList.add("w-1/20");
+                holeDetails.classList.add("hole");
+                // holeDetails.min = 1;
+                // holeDetails.max = 20;
+                // holeDetails.step = 1;
+
+                holeDetails.placeholder = item.Par; 
+
+                let holeStrokes = document.createElement("sup");
+                let strokeIndicator = "";
+                if (WeightedHcp >= item.Hcp18) {
+                    if (ExtraPops > 0) {
+                        while (ExtraPops > 0) {
+                            strokeIndicator += "*";
+                            strokeIndicator -= 1;
+                        }
+                    }
+
+                    strokeIndicator += "*";
+                }
+                holeStrokes.textContent = strokeIndicator;
+                holeDetails.classList.add("w-1/30");
+
+                let holeHcpStrokes = document.createElement("sub");
+                holeHcpStrokes.textContent = item.Par - 1;
+                holeDetails.classList.add("w-1/30");
+
+                hole.appendChild(holeDetails);
+                hole.append(holeStrokes);
+                hole.append(holeHcpStrokes);
+                playerId.append(hole);
+            });
+        }
+
+        function PrepareData(){
+            //loop through all details in the form and package everything for a JSON POST
+        }
+    </script>
+}
