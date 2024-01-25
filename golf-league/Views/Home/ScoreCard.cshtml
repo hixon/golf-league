@@ -107,7 +107,7 @@
                         <td class="@hole.Id text-center border border-slate-200"><sup>@Model.GetsPop(hole.Id, golfer.Id)</sup></td>
                     } *@
 
-                    <td class="h1 w-1/30 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
+                    @* <td class="h1 w-1/30 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
                     <td class="h2 text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
                     <td class="h3 text-center border-solid border-2 border-blue-500 rounded-full">3</td>
                     <td class="h4 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
@@ -130,7 +130,7 @@
                     <td class="out text-center border border-slate-200">42<sub>36</sub></td>
                     <td class="in text-center border border-slate-200">42<sub>37</sub></td>
                     <td class="total text-center border border-slate-200">84<sub>73</sub></td>
-                   @*  <td><input type="text" style="width:25px"/><sup>*</sup><sub>4</sub></td> *@
+                    <td><input type="text" style="width:25px"/><sup>*</sup><sub>4</sub></td> *@
                 </tr>
             }
         </tbody>
@@ -163,6 +163,9 @@
             //also need to figure out if we should get a pop on the hole
             //need to clear tees or update them if they're available
 
+            //if row has td's we need to remove them
+            checkAndRemoveOldRows(playerId.id);
+
             const holes = JSON.parse(document.querySelector("#HolesJson").value).filter(item => item.TeeId == teeId);
             let ExtraPops = Math.floor(courseHcp/18); //this will be 0 if a player is < 18
             let WeightedHcp = courseHcp % 18;
@@ -174,6 +177,13 @@
                 hole.classList.add("border-slate-200"); 
                 hole.classList.add("w-1/20"); 
                 hole.setAttribute("data-hole", item.Id);
+
+                if (item.Number <= 9) {
+                    hole.setAttribute("data-side", "out");
+                }
+                else {
+                    hole.setAttribute("data-side", "in");
+                }
 
                 let holeDetails = document.createElement("input");
                 holeDetails.type = "text";
@@ -213,6 +223,16 @@
 
         function PrepareData(){
             //loop through all details in the form and package everything for a JSON POST
+        }
+
+        function checkAndRemoveOldRows(playerId) {
+            let row = "";
+
+            let playerRow = document.getElementById(playerId);
+
+            while (playerRow.querySelectorAll("td").length > 3) {
+                playerRow.querySelectorAll("td")[3].remove();
+            }
         }
     </script>
 }
