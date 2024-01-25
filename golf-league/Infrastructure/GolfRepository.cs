@@ -74,12 +74,19 @@ namespace golf_league.Infrastructure
 
         public ScoreCardViewModel GetScoreCardDetails(Guid courseId) //pick westy since we always play there
         {
+            var allTees = GetTeesByCourseId(courseId);
+            var allHoles = GetHoleInfoByCourseId(courseId);
+            var allPlayers = GetAllPlayers();
+
             return new ScoreCardViewModel()
             {
                 Course = GetCourseById(courseId),
-                Tees = GetTeesByCourseId(courseId),
-                Holes = GetHoleInfoByCourseId(courseId),
-                Players = GetAllPlayers()
+                Tees = allTees,
+                Holes = allHoles,
+                Players = allPlayers, 
+                TeesJson = JsonSerializer.Serialize(allTees),
+                HolesJson = JsonSerializer.Serialize(allHoles),
+                PlayersJson = JsonSerializer.Serialize(allPlayers),
             };
         }
 

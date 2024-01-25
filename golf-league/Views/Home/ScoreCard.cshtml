@@ -2,9 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Score Input";
 }
 
 @model golf_league.ViewModels.ScoreCardViewModel
+
+@Html.HiddenFor(s => s.TeesJson)
+@Html.HiddenFor(s => s.HolesJson)
 
 <div id="score-card">
     <table class="table-auto border-separate drop-shadow-2xl border-2 border-slate-900">
@@ -94,113 +98,178 @@
         <tbody>
             @foreach(var golfer in Model.Players)
             {
-                <tr>
-                    <td class="">@golfer.FirstName</td>
-                    <td class="">@golfer.CurrIndex</td>
-                    <td class="">White</td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border border-slate-200">4</td>
-                    <td class=" text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                    
-                    <td class=" text-center border border-slate-200">4</td>
-                    <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class=" text-center border-double border-4 border-red-500">5</td>
-                    <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class=" text-center border-solid border-2 border-red-500">5</td>
-
-                    <td class=" text-center border border-slate-200">42<sub>36</sub></td>
-                    <td class=" text-center border border-slate-200">42<sub>37</sub></td>
-                    <td class=" text-center border border-slate-200">84<sub>73</sub></td>
+                <tr id="@golfer.Id" class="golferinfo">
+                    <td class="name">@golfer.FirstName</td>
+                    <td class="handicap" data-index="@golfer.CurrIndex">@golfer.CurrIndex</td>
+                    <td class="tee">@Html.DropDownListFor(c => c.Tees, new SelectList(Model.Tees, "Id", "Name"), "(Choose One)", new {onchange = "UpdateCourseTees(this)"})</td>
                 </tr>
             }
-            @* <tr>
-                <td class="">Ryan</td>
-                <td class="">11.2</td>
-                <td class="">White</td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">42<sub>36</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5</td>
-                <td class=" text-center border border-slate-200">42<sub>37</sub></td>
-                <td class=" text-center border border-slate-200">84<sub>73</sub></td>
-            </tr>
-            <tr>
-                <td class="">Sal</td>
-                <td class="">5.5</td>
-                <td class="">White</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">3</td>
-                <td class=" text-center border-double border-4 border-blue-500">3</td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">34<sub>31</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border-solid border-2 border-red-500">4</td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                <td class=" text-center border border-slate-200">3</td>
-                <td class=" text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">4</td>
-                <td class=" text-center border border-slate-200">35<sub>33</sub></td>
-                <td class=" text-center border border-slate-200">69<sub>64</sub></td>
-            </tr>
-            <tr>
-                <td class="">Karl Sr.</td>
-                <td class="">32.1</td>
-                <td class="">Gold</td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>*</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">5<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-solid border-2 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">53<sub>37</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>**</sup><sub>4</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-single border-2 border-red-500">4<sup>**</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">9<sup>**</sup><sub>7</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">7<sup>**</sup><sub>5</sub></td>
-                <td class=" text-center border-single border-2 border-red-500">4<sup>*</sup><sub>3</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">9<sup>**</sup><sub>7</sub></td>
-                <td class=" text-center border-double border-4 border-red-500">6<sup>*</sup><sub>4</sub></td>
-                <td class=" text-center border border-slate-200">59<sub>43</sub></td>
-                <td class=" text-center border border-slate-200">112<sub>80</sub></td>
-            </tr> *@
         </tbody>
     </table>
+
+    <button type="submit" onclick="PrepareData()">Save</button>
 </div>
+
+@section scripts{
+    <script>
+        function UpdateCourseTees(details) {
+            const teedetails = JSON.parse(document.querySelector("#TeesJson").value);
+
+            const rating = teedetails.filter(item => item.Id == details.value)[0].Rating;
+            const slope = teedetails.filter(item => item.Id == details.value)[0].Slope;
+            const par = teedetails.filter(item => item.Id == details.value)[0].Par;
+
+            //calculate side handicap
+            let index = details.parentElement.parentElement.querySelector(".handicap").getAttribute("data-index");
+
+            const courseIndex = Math.round(index * (slope / 113) + (rating - par));
+
+            details.parentElement.parentElement.querySelector(".handicap").textContent = courseIndex;
+
+            SetHoleDetails(courseIndex, details.value, details.parentElement.parentElement);
+        }
+
+        function SetHoleDetails(courseHcp, teeId, playerId) {
+            //need to loop through the holes and only show the ones we care about
+            //also need to figure out if we should get a pop on the hole
+            //need to clear tees or update them if they're available
+
+            //if row has td's we need to remove them
+            checkAndRemoveOldRows(playerId.id);
+
+            const holes = JSON.parse(document.querySelector("#HolesJson").value).filter(item => item.TeeId == teeId);
+            let ExtraPops = Math.floor(courseHcp/18); //this will be 0 if a player is < 18
+            let WeightedHcp = courseHcp % 18;
+            let frontTotal = 0;
+            let frontHcp = 0;
+            let backTotal = 0;
+            let backHcp = 0;
+            let fullTotal = 0;
+            let fullHcp = 0;
+
+            holes.forEach(function(item) {
+                let hole = document.createElement("td");
+                hole.classList.add("text-center"); 
+                hole.classList.add("border");
+                hole.classList.add("border-slate-200"); 
+                hole.classList.add("w-1/20"); 
+                hole.setAttribute("data-hole", item.Id);
+
+                if (item.Number <= 9) {
+                    hole.setAttribute("data-side", "out");
+                }
+                else {
+                    hole.setAttribute("data-side", "in");
+                }
+
+                let holeDetails = document.createElement("input");
+                holeDetails.type = "text";
+                holeDetails.classList.add("w-1/20");
+                holeDetails.classList.add("hole");
+                holeDetails.onchange = function () {
+                    UpdateHoleInfo(this);
+                };
+
+                holeDetails.placeholder = item.Par; 
+
+                let holeStrokes = document.createElement("sup");
+                let strokeIndicator = "";
+                if (WeightedHcp >= item.Hcp18) {
+                    if (ExtraPops > 0) {
+                        while (ExtraPops > 0) {
+                            strokeIndicator += "*";
+                            strokeIndicator -= 1;
+                        }
+                    }
+
+                    strokeIndicator += "*";
+                }
+                holeStrokes.textContent = strokeIndicator;
+                holeDetails.classList.add("w-1/30");
+
+                let holeHcpStrokes = document.createElement("sub");
+                holeHcpStrokes.textContent = item.Par - strokeIndicator.length;
+                holeDetails.classList.add("w-1/30");
+
+                if (item.Number <= 9) {
+                    frontTotal += item.Par;
+                    frontHcp += (item.Par - strokeIndicator.length);
+                }
+                else {
+                    backTotal += item.Par;
+                    backHcp += (item.Par - strokeIndicator.length);
+                }
+
+                hole.appendChild(holeDetails);
+                hole.append(holeStrokes);
+                hole.append(holeHcpStrokes);
+                playerId.append(hole);
+            });
+
+            //Add totals 
+            let outhole = document.createElement("td");
+            outhole.classList.add("text-center");
+            outhole.classList.add("border");
+            outhole.classList.add("border-slate-200");
+            outhole.classList.add("w-1/20");
+            outhole.setAttribute("data-hole", "outTotal");
+
+            let frontStrokes = document.createElement("sup");
+            frontStrokes.textContent = frontHcp;
+
+            let outDetails = document.createElement("label");
+            outDetails.textContent = frontTotal;
+            outhole.appendChild(outDetails);
+            outhole.appendChild(frontStrokes);
+            playerId.append(outhole);
+
+            let inhole = document.createElement("td");
+            inhole.classList.add("text-center");
+            inhole.classList.add("border");
+            inhole.classList.add("border-slate-200");
+            inhole.classList.add("w-1/20");
+            inhole.setAttribute("data-hole", "inTotal");
+
+            let backStrokes = document.createElement("sup");
+            backStrokes.textContent = backHcp;
+
+            let inDetails = document.createElement("label");
+            inDetails.textContent = backTotal;
+            inhole.appendChild(inDetails);
+            inhole.appendChild(backStrokes);
+            playerId.append(inhole);
+
+            let totalhole = document.createElement("td");
+            totalhole.classList.add("text-center");
+            totalhole.classList.add("border");
+            totalhole.classList.add("border-slate-200");
+            totalhole.classList.add("w-1/20");
+            totalhole.setAttribute("data-hole", "fullTotal");
+
+            let fullStrokes = document.createElement("sup");
+            fullStrokes.textContent = frontHcp + backHcp;
+
+            let fullDetails = document.createElement("label");
+            fullDetails.textContent = frontTotal + backTotal;
+            totalhole.appendChild(fullDetails);
+            totalhole.appendChild(fullStrokes);
+            playerId.append(totalhole);
+        }
+
+        function PrepareData(){
+            //loop through all details in the form and package everything for a JSON POST
+        }
+
+        function UpdateHoleInfo(info) {
+            alert(info);
+        }
+
+        function checkAndRemoveOldRows(playerId) {
+            let playerRow = document.getElementById(playerId);
+
+            while (playerRow.querySelectorAll("td").length > 3) {
+                playerRow.querySelectorAll("td")[3].remove();
+            }
+        }
+    </script>
+}
