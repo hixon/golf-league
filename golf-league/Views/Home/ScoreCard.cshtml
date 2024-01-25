@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Score Input";
 }
 
 @model golf_league.ViewModels.ScoreCardViewModel
@@ -101,36 +102,6 @@
                     <td class="name">@golfer.FirstName</td>
                     <td class="handicap" data-index="@golfer.CurrIndex">@golfer.CurrIndex</td>
                     <td class="tee">@Html.DropDownListFor(c => c.Tees, new SelectList(Model.Tees, "Id", "Name"), "(Choose One)", new {onchange = "UpdateCourseTees(this)"})</td>
-                    
-                    @* @foreach(var hole in Model.Holes.Where(h => h.TeeId == new Guid()))
-                    {
-                        <td class="@hole.Id text-center border border-slate-200"><sup>@Model.GetsPop(hole.Id, golfer.Id)</sup></td>
-                    } *@
-
-                    @* <td class="h1 w-1/30 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class="h2 text-center border-solid border-2 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class="h3 text-center border-solid border-2 border-blue-500 rounded-full">3</td>
-                    <td class="h4 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class="h5 text-center border-double border-4 border-red-500">5</td>
-                    <td class="h6 text-center border border-slate-200">4</td>
-                    <td class="h7 text-center border-double border-4 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                    <td class="h8 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class="h9 text-center border-solid border-2 border-red-500">5<sup>*</sup><sub>4</sub></td>
-                    
-                    <td class="h10 text-center border border-slate-200">4</td>
-                    <td class="h11 text-center border-double border-4 border-red-500">6<sup>*</sup><sub>5</sub></td>
-                    <td class="h12 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class="h13 text-center border-double border-4 border-red-500">5</td>
-                    <td class="h14 text-center border-solid border-2 border-blue-500 rounded-ful">4<sup>*</sup><sub>3</sub></td>
-                    <td class="h15 text-center border border-slate-200">4<sup>*</sup><sub>3</sub></td>
-                    <td class="h16 text-center border-double border-4 border-red-500">5</td>
-                    <td class="h17 text-center border border-slate-200">5<sup>*</sup><sub>4</sub></td>
-                    <td class="h18 text-center border-solid border-2 border-red-500">5</td>
-
-                    <td class="out text-center border border-slate-200">42<sub>36</sub></td>
-                    <td class="in text-center border border-slate-200">42<sub>37</sub></td>
-                    <td class="total text-center border border-slate-200">84<sub>73</sub></td>
-                    <td><input type="text" style="width:25px"/><sup>*</sup><sub>4</sub></td> *@
                 </tr>
             }
         </tbody>
@@ -169,6 +140,12 @@
             const holes = JSON.parse(document.querySelector("#HolesJson").value).filter(item => item.TeeId == teeId);
             let ExtraPops = Math.floor(courseHcp/18); //this will be 0 if a player is < 18
             let WeightedHcp = courseHcp % 18;
+            let frontTotal = 0;
+            let frontHcp = 0;
+            let backTotal = 0;
+            let backHcp = 0;
+            let fullTotal = 0;
+            let fullHcp = 0;
 
             holes.forEach(function(item) {
                 let hole = document.createElement("td");
@@ -189,9 +166,9 @@
                 holeDetails.type = "text";
                 holeDetails.classList.add("w-1/20");
                 holeDetails.classList.add("hole");
-                // holeDetails.min = 1;
-                // holeDetails.max = 20;
-                // holeDetails.step = 1;
+                holeDetails.onchange = function () {
+                    UpdateHoleInfo(this);
+                };
 
                 holeDetails.placeholder = item.Par; 
 
@@ -211,23 +188,83 @@
                 holeDetails.classList.add("w-1/30");
 
                 let holeHcpStrokes = document.createElement("sub");
-                holeHcpStrokes.textContent = item.Par - 1;
+                holeHcpStrokes.textContent = item.Par - strokeIndicator.length;
                 holeDetails.classList.add("w-1/30");
+
+                if (item.Number <= 9) {
+                    frontTotal += item.Par;
+                    frontHcp += (item.Par - strokeIndicator.length);
+                }
+                else {
+                    backTotal += item.Par;
+                    backHcp += (item.Par - strokeIndicator.length);
+                }
 
                 hole.appendChild(holeDetails);
                 hole.append(holeStrokes);
                 hole.append(holeHcpStrokes);
                 playerId.append(hole);
             });
+
+            //Add totals 
+            let outhole = document.createElement("td");
+            outhole.classList.add("text-center");
+            outhole.classList.add("border");
+            outhole.classList.add("border-slate-200");
+            outhole.classList.add("w-1/20");
+            outhole.setAttribute("data-hole", "outTotal");
+
+            let frontStrokes = document.createElement("sup");
+            frontStrokes.textContent = frontHcp;
+
+            let outDetails = document.createElement("label");
+            outDetails.textContent = frontTotal;
+            outhole.appendChild(outDetails);
+            outhole.appendChild(frontStrokes);
+            playerId.append(outhole);
+
+            let inhole = document.createElement("td");
+            inhole.classList.add("text-center");
+            inhole.classList.add("border");
+            inhole.classList.add("border-slate-200");
+            inhole.classList.add("w-1/20");
+            inhole.setAttribute("data-hole", "inTotal");
+
+            let backStrokes = document.createElement("sup");
+            backStrokes.textContent = backHcp;
+
+            let inDetails = document.createElement("label");
+            inDetails.textContent = backTotal;
+            inhole.appendChild(inDetails);
+            inhole.appendChild(backStrokes);
+            playerId.append(inhole);
+
+            let totalhole = document.createElement("td");
+            totalhole.classList.add("text-center");
+            totalhole.classList.add("border");
+            totalhole.classList.add("border-slate-200");
+            totalhole.classList.add("w-1/20");
+            totalhole.setAttribute("data-hole", "fullTotal");
+
+            let fullStrokes = document.createElement("sup");
+            fullStrokes.textContent = frontHcp + backHcp;
+
+            let fullDetails = document.createElement("label");
+            fullDetails.textContent = frontTotal + backTotal;
+            totalhole.appendChild(fullDetails);
+            totalhole.appendChild(fullStrokes);
+            playerId.append(totalhole);
         }
 
         function PrepareData(){
             //loop through all details in the form and package everything for a JSON POST
         }
 
-        function checkAndRemoveOldRows(playerId) {
-            let row = "";
+        function UpdateHoleInfo(info) {
+            alert(info);
+        }
 
+        function checkAndRemoveOldRows(playerId) {
             let playerRow = document.getElementById(playerId);
 
             while (playerRow.querySelectorAll("td").length > 3) {
