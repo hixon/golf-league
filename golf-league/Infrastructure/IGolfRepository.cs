@@ -16,5 +16,7 @@ namespace golf_league.Infrastructure
 
         public void SaveCourse(CourseDetailsViewModel info);
         public void SavePlayer(PlayerDetailsViewModel info);
+
+        public void SaveDetails(PlayerScoreDetailsViewModel details);
     }
 }

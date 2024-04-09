@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using golf_league.Models;
 using golf_league.ViewModels;
+using Microsoft.AspNetCore.Routing.Constraints;
 using System.Text.Json;
 
 namespace golf_league.Infrastructure
@@ -88,6 +89,128 @@ namespace golf_league.Infrastructure
                 HolesJson = JsonSerializer.Serialize(allHoles),
                 PlayersJson = JsonSerializer.Serialize(allPlayers),
             };
+        }
+
+        public void SaveDetails(PlayerScoreDetailsViewModel details)
+        {
+            //here we need to save the details
+            //order of saving
+            //Score
+            //HoleScore/ScoreDetails -> they're the same so remove one table
+            //Update Player.CurrIndex
+
+            //add Score for player
+            var scoreToAdd = _mapper.Map<Score>(details);
+            scoreToAdd.Active = true;
+            scoreToAdd.CreateDt = DateTime.Now;
+
+            _context.Score.Add(scoreToAdd);
+            _context.SaveChanges();
+
+            Guid addedRowId = scoreToAdd.Id;
+            
+            //add all scores for each hole
+            foreach(var hole in details.Holes)
+            {
+                ScoreDetail holeScoreToAdd = _mapper.Map<ScoreDetail>(hole);
+                holeScoreToAdd.ScoreId = addedRowId;
+                 
+                _context.ScoreDetail.Add(holeScoreToAdd);
+            }
+
+            _context.SaveChanges();
+
+            //update player.currindex
+            UpdatePlayerIndex(details.PlayerId);
+        }
+
+        public void UpdatePlayerIndex(Guid pId)
+        {
+            //calculation - https://www.usga.org/handicapping/roh/rules-of-handicapping.html
+
+            //we only care about the last 20 scores
+            var past20Scores = _context.Score
+                .Where(s => s.PlayerId == pId)
+                .OrderByDescending(s => s.DatePlayed)
+                .Take(20)
+                .ToList();
+
+            var player = _context.Player.Where(p => p.Id == pId).Single();
+
+            //
+            int rounds = past20Scores.Count;
+            decimal index = 0;
+
+            if (rounds == 3)
+            {
+                //lowest 1 -2 strokes
+                index = past20Scores.Min(s => s.Differential) - 2;
+            }
+            else if (rounds == 4)
+            {
+                //lowest 1 - 1 stroke
+                index = past20Scores.Min(s => s.Differential) - 1;
+            }
+            else if (rounds == 5)
+            {
+                //lowest 1
+                index = past20Scores.Min(s => s.Differential);
+            }
+            else if (rounds == 6)
+            {
+                //avg low 2 - 1
+                index = past20Scores.OrderBy(s => s.Differential).Take(2).Sum(s => s.Differential) - 1;
+            }
+            else if (rounds == 7 || rounds == 8)
+            {
+                //avg low 2
+                index = past20Scores.OrderBy(s => s.Differential).Take(2).Sum(s => s.Differential);
+            }
+            else if (rounds >= 9 && rounds <= 11)
+            {
+                //avg low 3
+                index = past20Scores.OrderBy(s => s.Differential).Take(3).Sum(s => s.Differential);
+            }
+            else if (rounds >= 12 && rounds <= 14)
+            {
+                //avg low 4
+                index = past20Scores.OrderBy(s => s.Differential).Take(4).Sum(s => s.Differential);
+            }
+            else if (rounds == 15 || rounds == 16)
+            {
+                //avg low 5
+                index = past20Scores.OrderBy(s => s.Differential).Take(5).Sum(s => s.Differential);
+            }
+            else if (rounds == 17 || rounds == 18)
+            {
+                //avg low 6
+                index = past20Scores.OrderBy(s => s.Differential).Take(6).Sum(s => s.Differential);
+            }
+            else if (rounds == 19)
+            {
+                //avg low 7
+                index = past20Scores.OrderBy(s => s.Differential).Take(7).Sum(s => s.Differential);
+            }
+            else if (rounds == 20)
+            {
+                //avg low 8
+                index = past20Scores.OrderBy(s => s.Differential).Take(8).Sum(s => s.Differential);
+            }
+            else
+            {
+                //number of rounds is less than three
+                //not sure what to do here
+                index = (decimal)player.CurrIndex;
+            }
+
+            //update with index 
+            if(player.CurrIndex != index)
+            {
+                player.CurrIndex = index;
+                player.LastUpdateDt = DateTime.Now;
+
+                _context.SaveChanges();
+            }
         }
 
         public IEnumerable<PlayerType> GetPlayerTypes()

@@ -1,7 +1,10 @@
-﻿namespace golf_league.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace golf_league.Models
 {
     public class Score
     {
+        [Key]
         public Guid Id { get; set; }
         public Guid PlayerId { get; set; }
         public DateTime DatePlayed { get; set; }

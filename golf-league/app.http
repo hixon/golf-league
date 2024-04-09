@@ -1,0 +1,159 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+POST http://localhost:5138/api/score 
+Content-Type: application/json
+
+{
+    "PlayerId": "42263663-2f43-4fd6-f6a2-08dbe0cb2342",
+    "DatePlayed": "4/4/2024 14:21:00.123",
+    "CourseId": "ef8429c4-8ebb-42c6-79a2-08dbd5c07428", 
+    "TeeId": "a58c86bc-c2ac-4239-97b1-d8c494c32055",
+    "Index": 11.4,
+    "Differential": 7.86,
+    "Total": 77,
+    "Holes":[
+        {
+            "HoleId": "33f0c633-52e7-42cc-cbf4-08dbf0652a5b",
+            "Number": 1,
+            "Par": 4,
+            "Score": 3,
+            "Hcp9": 8, 
+            "Hcp18": 15
+        }, 
+        {
+            "HoleId": "A955112C-48F0-492E-CBF5-08DBF0652A5B",
+            "Number": 2,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 4, 
+            "Hcp18": 9
+        },
+        {
+            "HoleId": "3E47554D-38FE-4ECE-CBF6-08DBF0652A5B",
+            "Number": 3,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 9, 
+            "Hcp18": 17
+        }, 
+        {
+            "HoleId": "4AA640E4-2B5F-4D2D-CBF7-08DBF0652A5B",
+            "Number": 4,
+            "Par": 3,
+            "Score": 5,
+            "Hcp9": 5, 
+            "Hcp18": 7
+        },
+        {
+            "HoleId": "6D84C7EF-7A57-47B4-CBF8-08DBF0652A5B",
+            "Number": 5,
+            "Par": 5,
+            "Score": 6,
+            "Hcp9": 7, 
+            "Hcp18": 13
+        }, 
+        {
+            "HoleId": "81FB4911-6F70-439C-CBF9-08DBF0652A5B",
+            "Number": 6,
+            "Par": 4,
+            "Score": 6,
+            "Hcp9": 1, 
+            "Hcp18": 1
+        },
+        {
+            "HoleId": "77AA3C29-12B0-439C-CBFA-08DBF0652A5B",
+            "Number": 7,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 2, 
+            "Hcp18": 3
+        }, 
+        {
+            "HoleId": "F349A3C1-D237-4460-CBFB-08DBF0652A5B",
+            "Number": 8,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 3, 
+            "Hcp18": 5
+        },
+        {
+            "HoleId": "23253511-D5D3-4B1F-CBFC-08DBF0652A5B",
+            "Number": 9,
+            "Par": 4,
+            "Score": 5,
+            "Hcp9": 6, 
+            "Hcp18": 11
+        }, 
+        {
+            "HoleId": "6AB4DCA1-67C6-44EF-CBFD-08DBF0652A5B",
+            "Number": 10,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 5, 
+            "Hcp18": 10
+        },
+        {
+            "HoleId": "DB243FA1-4940-44E5-CBFE-08DBF0652A5B",
+            "Number": 11,
+            "Par": 3,
+            "Score": 4,
+            "Hcp9": 3, 
+            "Hcp18": 6
+        }, 
+        {
+            "HoleId": "3383E602-8240-47F3-CBFF-08DBF0652A5B",
+            "Number": 12,
+            "Par": 4,
+            "Score": 5,
+            "Hcp9": 6, 
+            "Hcp18": 12
+        },
+        {
+            "HoleId": "6D95BE26-F9CA-4766-CC00-08DBF0652A5B",
+            "Number": 13,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 7, 
+            "Hcp18": 14
+        }, 
+        {
+            "HoleId": "9FB0CE2B-A5EB-41F3-CC01-08DBF0652A5B",
+            "Number": 14,
+            "Par": 3,
+            "Score": 2,
+            "Hcp9": 9, 
+            "Hcp18": 18
+        },
+        {
+            "HoleId": "11F41C89-7031-44D2-CC02-08DBF0652A5B",
+            "Number": 15,
+            "Par": 3,
+            "Score": 4,
+            "Hcp9": 8, 
+            "Hcp18": 16
+        }, 
+        {
+            "HoleId": "8AEF3D0F-0046-4D09-CC03-08DBF0652A5B",
+            "Number": 16,
+            "Par": 5,
+            "Score": 5,
+            "Hcp9": 1, 
+            "Hcp18": 2
+        },
+        {
+            "HoleId": "12851C69-15A6-42A2-CC04-08DBF0652A5B",
+            "Number": 17,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 4, 
+            "Hcp18": 8
+        }, 
+        {
+            "HoleId": "E1F810FA-5E01-4320-CC05-08DBF0652A5B",
+            "Number": 18,
+            "Par": 4,
+            "Score": 4,
+            "Hcp9": 2, 
+            "Hcp18": 4
+        }
+    ]
+}
