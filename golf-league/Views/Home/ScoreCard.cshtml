@@ -154,6 +154,7 @@
                 hole.classList.add("border-slate-200"); 
                 hole.classList.add("w-1/20"); 
                 hole.setAttribute("data-hole", item.Id);
+                hole.setAttribute("hole-num", item.Number);
 
                 if (item.Number <= 9) {
                     hole.setAttribute("data-side", "out");
@@ -261,10 +262,31 @@
         }
 
         function UpdateHoleInfo(info) {
-            alert(info.value);
+            //alert(info.value);
+            //const holes = JSON.parse(document.querySelector("#HolesJson").value).filter(item => item.TeeId == teeId);
 
+            let holeId = info.parentElement.getAttribute("data-hole");
+            let playerId = info.parentElement.parentElement.id;
+
+            let holePar = info.placeholder;
+            let hcpPar = info.parentElement.children[2].innerText;
+
+            if (holePar - hcpPar > 0) {
+                info.parentElement.children[2].innerText = info.value - (holePar - hcpPar);
+            }
+            else {
+                info.parentElement.children[2].innerText = '';
+            }
             //check the side and update the total for the side and total
+            if (info.parentElement.getAttribute("data-side") == "out") {
+                //outTotal
+            }
+            else if (info.parentElement.getAttribute("data-side") == "in") {
+                //inTotal
+            }
 
+            //add to total
+            //fullTotal
         }
 
         function checkAndRemoveOldRows(playerId) {

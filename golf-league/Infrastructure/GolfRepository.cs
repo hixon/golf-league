@@ -93,12 +93,6 @@ namespace golf_league.Infrastructure
 
         public void SaveDetails(PlayerScoreDetailsViewModel details)
         {
-            //here we need to save the details
-            //order of saving
-            //Score
-            //HoleScore/ScoreDetails -> they're the same so remove one table
-            //Update Player.CurrIndex
-
             //add Score for player
             var scoreToAdd = _mapper.Map<Score>(details);
             scoreToAdd.Active = true;
@@ -124,7 +118,7 @@ namespace golf_league.Infrastructure
             UpdatePlayerIndex(details.PlayerId);
         }
 
-        public void UpdatePlayerIndex(Guid pId)
+        private void UpdatePlayerIndex(Guid pId)
         {
             //calculation - https://www.usga.org/handicapping/roh/rules-of-handicapping.html
 
